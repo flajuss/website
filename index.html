@@ -15,7 +15,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes">
     <meta name="keywords" content="flajuss, flajus, flajuss remix, flajuss.com, flajus.com, flajuss.pl, flajus.pl">
     <meta name="description" content="meet flajuss and discover his world">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -27,7 +27,7 @@
 
     <style>
         :root {
-            --bg-color: #080809; 
+            --bg-color: #050506; 
             --text-main: #eae8ff; 
             --text-muted: #888888;
             --accent: #eae8ff; 
@@ -50,7 +50,7 @@
         }
 
         html {
-            font-size: 100%; 
+            font-size: 120%; 
             -ms-overflow-style: none; 
             scrollbar-width: none; 
             background-color: var(--bg-color);
@@ -149,7 +149,7 @@
 
         .nav-wrapper {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            width: fit-content; max-width: 90%; z-index: 100; display: flex; justify-content: center;
+            width: fit-content; max-width: 90vw; z-index: 100; display: flex; justify-content: center;
         }
         
         .hud-nav { 
@@ -222,23 +222,24 @@
         .timer-link { text-decoration: none; color: var(--text-main); display: inline-block; transition: color 0.3s; }
         .timer-link:hover #timer { color: var(--accent); }
         .timer-box { display: inline-block; background-color: rgba(17, 17, 18, 0.5); padding: 4.5px 13.5px; border-radius: 9px; border: 1px solid rgba(234, 232, 255, 0.05); }
-        #timer { font-family: "Outfit", sans-serif; font-size: 1.35rem; font-weight: 900; letter-spacing: 0.9px; font-variant-numeric: tabular-nums; transition: color 0.3s; }
+        #timer { font-family: "Outfit", sans-serif; font-size: clamp(16.2px, 3.6vw, 21.6px); font-weight: 900; letter-spacing: 0.9px; font-variant-numeric: tabular-nums; transition: color 0.3s; }
         
         .q-marks-wrapper { margin-top: 15px; display: flex; justify-content: center; gap: 8px; }
         .q-mark { color: #333; font-family: var(--font-tech); font-size: 0.7rem; cursor: default; }
 
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-        section { padding: 80px 5%; position: relative; background: var(--bg-color); z-index: 10; }
+        section { padding: 80px 5vw; position: relative; background: var(--bg-color); z-index: 10; }
         .section-header { margin-bottom: 20px; } 
         .section-id { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 5px; font-family: var(--font-tech); }
-        .section-title { font-size: 2.5rem; font-weight: 700; text-transform: lowercase; letter-spacing: -1px; }
+        .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; text-transform: lowercase; letter-spacing: -1px; }
 
         .split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; max-width: 1100px; margin: 0 auto; width: 100%; }
         .bio-container { padding: 30px; width: 100%; }
         .bio-text { font-size: 0.95rem; color: #b0b0b0; line-height: 1.6; font-weight: 300; word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; }
         .bio-text p { margin-bottom: 20px; }
         .bio-text p:last-child { margin-bottom: 0; }
+        .bio-text p a.text-link { user-select: text; -webkit-user-select: text; }
         .hover-word { transition: color 0.2s ease; display: inline; }
         .hover-word:hover { color: var(--accent); }
         .text-link { color: var(--text-main); font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(234, 232, 255, 0.15); transition: all 0.3s; }
@@ -259,10 +260,42 @@
         .radio-status { color: var(--text-muted); transition: color 0.3s; }
         .radio-title { font-weight: 700; margin-top: 2px; }
         .volume-container { display: flex; align-items: center; flex-shrink: 0; }
-        input[type=range] { -webkit-appearance: none; width: 70px; background: transparent; }
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 120px;
+            background: transparent;
+            padding: 12px 0;
+            cursor: pointer;
+        }
         input[type=range]:focus { outline: none; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 12px; width: 4px; background: var(--accent); margin-top: -5px; }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 2px; background: rgba(234, 232, 255, 0.2); }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 10px;
+            background: var(--accent);
+            margin-top: -11px;
+            border-radius: 3px;
+        }
+        input[type=range]::-moz-range-thumb {
+            height: 24px;
+            width: 10px;
+            background: var(--accent);
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 3px;
+            background: rgba(234, 232, 255, 0.2);
+            border-radius: 2px;
+        }
+        input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 3px;
+            background: rgba(234, 232, 255, 0.2);
+            border-radius: 2px;
+        }
 
         .ig-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; width: 100%; }
         .ig-item { 
@@ -279,8 +312,8 @@
         }
         .ig-item:hover img { transform: scale(1.05); filter: grayscale(0%) contrast(1.1); }
         
-        footer { padding: 60px 5% 80px; text-align: center; position: relative; background: var(--bg-color); z-index: 10; } 
-        .footer-email { font-size: 1.25rem; font-weight: 300; color: var(--accent); text-decoration: none; margin: 0 auto 25px auto; display: inline-flex; justify-content: center; align-items: center; width: fit-content; max-width: 100%; text-transform: lowercase; word-break: break-word; }
+        footer { padding: 60px 5vw 80px; text-align: center; position: relative; background: var(--bg-color); z-index: 10; } 
+        .footer-email { font-size: clamp(1rem, 2.5vw, 1.5rem); font-weight: 300; color: var(--accent); text-decoration: none; margin-bottom: 25px; display: inline-block; text-transform: lowercase; word-break: break-word; }
         .social-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 40px; flex-wrap: wrap; }
         .social-links a { color: var(--text-muted); text-decoration: none; text-transform: lowercase; transition: color 0.3s; font-size: 0.8rem; }
         .social-links a:hover { color: var(--accent); }
@@ -357,7 +390,7 @@
             .bio-container { padding: 20px; }
             .hud-nav { padding: 10px 20px; }
             .hud-links { gap: 15px; font-size: 0.7rem; }
-            .hero-logo-container { max-width: 85%; } 
+            .hero-logo-container { max-width: 85vw; } 
             #countdown-container { bottom: 130px; }
             .scroll-progress-container { display: none; }
             .hero-stats { display: none; }
@@ -367,20 +400,18 @@
             .radio-btn { width: 40px; height: 32px; min-width: 40px; padding: 0; font-size: 0.8rem; }
             .radio-info { width: auto; text-align: left; min-width: 0; }
             .volume-container { width: auto; justify-content: flex-end; }
-            .volume-container input[type=range] { width: 60px; max-width: 60px; }
+            .volume-container input[type=range] { width: 90px; max-width: 90px; }
             .q-marks-wrapper { flex-wrap: wrap; }
-            .section-title { font-size: 2rem; }
         }
 
         @media(max-width: 480px) {
             html { font-size: 100%; } 
-            .footer-email { font-size: 1.1rem; }
         }
         
         @media(max-width: 380px) {
             .hud-links { gap: 12px; font-size: 0.65rem; } 
             .hud-nav { padding: 10px 15px; }
-            .footer-email { word-break: break-all; } 
+            .footer-email { font-size: 1.1rem; word-break: break-all; } 
         }
     </style>
 </head>
@@ -394,10 +425,10 @@
     </div>
 
     <div id="signal-container" class="liquid-glass">
-        <a href="https://flajuss.com/dontstop" target="_blank" class="signal-text" style="text-decoration: none; color: inherit;">
+        <div class="signal-text">
             <div class="signal-msg">[ ENCRYPTED SIGNAL INTERCEPTED ]</div>
             <div class="signal-title">"DON'T STOP" OUT NOW!</div>
-        </a>
+        </div>
         <div class="signal-close snappy" id="signal-close">
             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -426,16 +457,16 @@
         <a href="#" target="_blank" class="snappy">spotify</a>
         <a href="#" target="_blank" class="snappy">tiktok</a>
         <div class="menu-divider"></div>
-        <a href="/cdn-cgi/l/email-protection#dfb9b3beb5aaacacf1bcb0b1abbebcab9fb8b2beb6b3f1bcb0b2" class="snappy">contact</a>
+        <a href="mailto:flajuss.contact@gmail.com" class="snappy">contact</a>
     </div>
 
     <div class="nav-wrapper">
         <nav class="hud-nav liquid-glass">
             <div class="hud-links">
                 <a href="#about" class="snappy">about me</a>
-                <a href="/cdn-cgi/l/email-protection#83e5efe2e9f6f0f0ade0ecedf7e2e0f7c3e4eee2eaefade0ecee" class="snappy">contact</a>
-                <a href="https://www.linktr.ee/flajuss" class="snappy" target="_blank">socials</a>
-                <a href="https://www.flajuss.com/remix" class="snappy" target="_blank">remix</a>
+                <a href="mailto:flajuss.contact@gmail.com" class="snappy">contact</a>
+                <a href="https://www.flajuss.com/links.html" class="snappy" target="_blank">socials</a>
+                <a href="https://www.flajuss.com/dontstop" class="snappy" target="_blank">new release</a>
             </div>
         </nav>
     </div>
@@ -530,7 +561,7 @@
         </section>
 
         <footer class="reveal" data-cursor="cursor-warning">
-            <a href="/cdn-cgi/l/email-protection#83e5efe2e9f6f0f0ade0ecedf7e2e0f7c3e4eee2eaefade0ecee" class="footer-email snappy"><span class="__cf_email__" data-cfemail="bddbd1dcd7c8cece93ded2d3c9dcdec9fddad0dcd4d193ded2d0">[email&#160;protected]</span></a>
+            <a href="mailto:flajuss.contact@gmail.com" class="footer-email snappy">flajuss.contact@gmail.com</a>
             <div class="social-links">
                 <a href="https://instagram.com/flajuss" target="_blank" class="snappy">instagram</a>
                 <a href="https://soundcloud.com/flajuss" target="_blank" class="snappy">soundcloud</a>
@@ -560,7 +591,28 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
+        window.addEventListener('wheel', e => {
+            if (e.ctrlKey) {
+                e.preventDefault();
+                const dpr = window.devicePixelRatio;
+                const zoomingIn = e.deltaY < 0;
+                const zoomingOut = e.deltaY > 0;
+                if ((dpr >= 2.0 && zoomingIn) || (dpr <= 0.5 && zoomingOut)) {
+                    return;
+                }
+            }
+        }, { passive: false });
+
+        window.addEventListener('keydown', e => {
+            if (e.ctrlKey && (e.key === '+' || e.key === '=' || e.key === '-')) {
+                const dpr = window.devicePixelRatio;
+                if ((dpr >= 2.0 && (e.key === '+' || e.key === '=')) || (dpr <= 0.5 && e.key === '-')) {
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });
+
         document.addEventListener("DOMContentLoaded", () => {
             const preloader = document.getElementById('preloader');
             const preloaderText = document.getElementById('preloader-text');
@@ -610,8 +662,7 @@
             }, 1200);
 
             if (signalClose) {
-                signalClose.addEventListener('click', (e) => {
-                    e.preventDefault();
+                signalClose.addEventListener('click', () => {
                     signalContainer.classList.remove('show');
                     setTimeout(() => {
                         signalContainer.style.display = 'none';
@@ -795,12 +846,10 @@
             if (logoElForHover) {
                 logoElForHover.addEventListener('mouseenter', () => {
                     hudElementsToFade.forEach(el => el.classList.add('fade-out-hud'));
-                    if (heroVideo) heroVideo.style.opacity = '0.30';
                 });
                 
                 logoElForHover.addEventListener('mouseleave', () => {
                     hudElementsToFade.forEach(el => el.classList.remove('fade-out-hud'));
-                    if (heroVideo) heroVideo.style.opacity = '0.25';
                 });
             }
 
@@ -955,70 +1004,47 @@
             const playBtn = document.getElementById('radio-play-btn');
             const radioStatus = document.getElementById('radio-status');
             const volumeSlider = document.getElementById('radio-volume');
-
-            const audioEl = new Audio('https://www.dropbox.com/scl/fi/pwvnw4tgyigx4irv1eiwe/flajuss-dot-com-radio.mp3?rlkey=slb3gutghap3keok2ieks7sfe&st=l81b51e4&raw=1');
+            
+            const audioUrl = "https://www.dropbox.com/scl/fi/fp3furqkymbolejgl3hd5/flajuss-radio.mp3?rlkey=wte0193m9ctkbbzx2e4yx0wr8&st=0vl0p2ms&raw=1";
+            const audioEl = new Audio();
+            audioEl.src = audioUrl;
+            audioEl.preload = "auto";
             audioEl.loop = true;
-            audioEl.preload = "metadata";
+
+            function syncAudio() {
+                if (!isNaN(audioEl.duration) && isFinite(audioEl.duration) && audioEl.duration > 0) {
+                    const now = Date.now() / 1000;
+                    audioEl.currentTime = now % audioEl.duration;
+                }
+            }
 
             const savedVolume = localStorage.getItem('flajuss_volume');
             if (savedVolume !== null && volumeSlider) {
                 volumeSlider.value = savedVolume;
                 audioEl.volume = savedVolume;
-            } else {
-                audioEl.volume = 0.5;
+            } else if (volumeSlider) {
+                audioEl.volume = volumeSlider.value;
             }
-
-            function syncAudio() {
-                if (!isNaN(audioEl.duration) && audioEl.duration > 0) {
-                    const startEpoch = 1700000000;
-                    const now = Date.now() / 1000;
-                    audioEl.currentTime = (now - startEpoch) % audioEl.duration;
-                }
-            }
-
-            audioEl.addEventListener('loadedmetadata', () => {
-                if (!audioEl.paused) {
-                    syncAudio();
-                }
-            });
-
-            // Dodaliśmy niezależną od obiektu Audio zmienną śledzącą UI, aby pauza zawsze działała na froncie, nawet jeśli padnie backend / link wygaśnie
-            let isPlaying = false; 
 
             if (playBtn) {
                 playBtn.addEventListener('click', () => {
-                    if (!isPlaying) {
-                        // Kiedy włączasz
+                    if (audioEl.paused) {
+                        playBtn.innerText = "⌛"; 
                         syncAudio();
-                        isPlaying = true; // Zmieniamy status w pamięci w tej samej chwili
                         
-                        if (playBtn) playBtn.innerText = "❚❚";
-                        if (radioStatus) {
-                            radioStatus.innerText = "[ LIVE ]";
-                            radioStatus.style.color = "#ff3333";
-                        }
-                        
-                        const playPromise = audioEl.play();
-                        
-                        // Przechwycenie błędu wygasłego linku z dropboxa
-                        if (playPromise !== undefined) {
-                            playPromise.catch(error => {
-                                console.error("Audio playback error:", error);
-                                // Jeśli odtwarzanie się nie uda, wycofujemy zmiany wyglądu i statusu UI
-                                isPlaying = false;
-                                if (playBtn) playBtn.innerText = "▶︎";
-                                if (radioStatus) {
-                                    radioStatus.innerText = "[ ERR_LINK ]";
-                                    radioStatus.style.color = "#ff3333";
-                                }
-                            });
-                        }
+                        audioEl.play().then(() => {
+                            playBtn.innerText = "❚❚";
+                            if (radioStatus) {
+                                radioStatus.innerText = "[ LIVE ]";
+                                radioStatus.style.color = "#ff3333";
+                            }
+                        }).catch(err => {
+                            console.error("Audio block error:", err);
+                            playBtn.innerText = "▶︎"; 
+                        });
                     } else {
-                        // Kiedy pauzujesz
                         audioEl.pause();
-                        isPlaying = false; // Resetujemy status w pamięci w tej samej chwili
-                        
-                        if (playBtn) playBtn.innerText = "▶︎";
+                        playBtn.innerText = "▶︎";
                         if (radioStatus) {
                             radioStatus.innerText = "[ OFFLINE ]";
                             radioStatus.style.color = "var(--text-muted)";
@@ -1035,7 +1061,5 @@
             }
         });
     </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"1f18d83357f8478a92362829c5040fe2","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
-</html>
 </html>
