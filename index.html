@@ -50,7 +50,7 @@
         }
 
         html {
-            font-size: 120%; 
+            font-size: 132%; 
             -ms-overflow-style: none; 
             scrollbar-width: none; 
             background-color: var(--bg-color);
@@ -173,29 +173,8 @@
             background: var(--bg-color);
         }
 
-        .video-wrapper {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; pointer-events: none; overflow: hidden;
-            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-            transition: opacity 0.5s ease;
-        }
-        
-        .video-wrapper.video-hidden { opacity: 0 !important; }
-
-        #hero-video {
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transform: translate(-50%, -50%) scale(1.4);
-            opacity: 0.25;
-            transition: opacity 0.6s ease;
-        }
-
         .fade-out-hud { opacity: 0 !important; pointer-events: none !important; }
-        .nav-wrapper, .mobile-hud, #countdown-inner, .hero-stats, #signal-container { transition: opacity 0.5s ease, transform 0.5s ease; }
+        .nav-wrapper, .mobile-hud, .hero-stats, #signal-container { transition: opacity 0.5s ease, transform 0.5s ease; }
 
         .hero-center { display: flex; justify-content: center; align-items: center; flex-grow: 1; width: 100%; position: relative; z-index: 3; pointer-events: none; }
         .hero-logo-container { width: 100%; max-width: 550px; padding: 0 20px; transition: transform 0.6s ease; pointer-events: auto; }
@@ -212,22 +191,6 @@
         .stats-tr { top: 40px; right: 40px; text-align: right; }
         .stats-bl { bottom: 40px; left: 40px; text-align: left; }
         .stats-br { bottom: 40px; right: 40px; text-align: right; }
-
-        #countdown-container { 
-            text-align: center; position: absolute; bottom: 90px; width: 100%; 
-            opacity: 0; transform: translateY(27px); animation: fadeInUp 2s ease forwards; 
-            animation-delay: 0.5s; z-index: 10; pointer-events: auto;
-        }
-
-        .timer-link { text-decoration: none; color: var(--text-main); display: inline-block; transition: color 0.3s; }
-        .timer-link:hover #timer { color: var(--accent); }
-        .timer-box { display: inline-block; background-color: rgba(17, 17, 18, 0.5); padding: 4.5px 13.5px; border-radius: 9px; border: 1px solid rgba(234, 232, 255, 0.05); }
-        #timer { font-family: "Outfit", sans-serif; font-size: clamp(16.2px, 3.6vw, 21.6px); font-weight: 900; letter-spacing: 0.9px; font-variant-numeric: tabular-nums; transition: color 0.3s; }
-        
-        .q-marks-wrapper { margin-top: 15px; display: flex; justify-content: center; gap: 8px; }
-        .q-mark { color: #333; font-family: var(--font-tech); font-size: 0.7rem; cursor: default; }
-
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
         section { padding: 80px 5vw; position: relative; background: var(--bg-color); z-index: 10; }
         .section-header { margin-bottom: 20px; } 
@@ -391,7 +354,6 @@
             .hud-nav { padding: 10px 20px; }
             .hud-links { gap: 15px; font-size: 0.7rem; }
             .hero-logo-container { max-width: 85vw; } 
-            #countdown-container { bottom: 130px; }
             .scroll-progress-container { display: none; }
             .hero-stats { display: none; }
             .mobile-hud { display: block; }
@@ -401,11 +363,10 @@
             .radio-info { width: auto; text-align: left; min-width: 0; }
             .volume-container { width: auto; justify-content: flex-end; }
             .volume-container input[type=range] { width: 90px; max-width: 90px; }
-            .q-marks-wrapper { flex-wrap: wrap; }
         }
 
         @media(max-width: 480px) {
-            html { font-size: 100%; } 
+            html { font-size: 110%; } 
         }
         
         @media(max-width: 380px) {
@@ -473,12 +434,6 @@
 
     <main id="main-content">
         <header class="hero" id="hero-section" data-cursor="cursor-hero">
-            <div id="video-wrapper" class="video-wrapper">
-                <video id="hero-video" autoplay loop muted playsinline>
-                    <source src="https://www.dropbox.com/scl/fi/jpulzdbzuce93cbfvt1w8/szpotifaj_1.mp4?rlkey=amxjhuec00jj94oxr9fpiog2z&st=hsol78e5&raw=1" type="video/mp4">
-                </video>
-            </div>
-
             <div class="hero-stats stats-tl">
                 <div id="stat-time">00:00:00</div>
                 <div style="opacity: 0.5;">status: online</div>
@@ -499,19 +454,6 @@
             <div class="hero-center">
                 <div class="hero-logo-container">
                     <img src="logo-fullsize.png" alt="flajuss">
-                </div>
-            </div>
-            
-            <div id="countdown-container">
-                <div id="countdown-inner" style="transition: opacity 0.5s ease;">
-                    <a href="comingsoon.html" class="timer-link snappy">
-                        <div class="timer-box">
-                            <div id="timer">00:00:00:00</div>
-                        </div>
-                    </a>
-                    <div class="q-marks-wrapper">
-                        <span class="matrix-text q-mark snappy" data-value="????? ??? ??? ???? ??">????? ??? ??? ???? ??</span>
-                    </div>
                 </div>
             </div>
         </header>
@@ -777,7 +719,6 @@
                 const progressBar = document.getElementById('progress-bar');
                 const progressContainer = document.getElementById('progress-container');
                 const heroStats = document.querySelectorAll('.hero-stats');
-                const videoWrapper = document.getElementById('video-wrapper');
 
                 if (progressBar) {
                     progressBar.style.height = `${progress}%`;
@@ -788,17 +729,11 @@
                     heroStats.forEach(stat => {
                         stat.style.opacity = '0';
                     });
-                    if (videoWrapper) {
-                        videoWrapper.classList.add('video-hidden');
-                    }
                 } else {
                     if (progressContainer) progressContainer.classList.remove('visible');
                     heroStats.forEach(stat => {
                         stat.style.opacity = '1';
                     });
-                    if (videoWrapper) {
-                        videoWrapper.classList.remove('video-hidden');
-                    }
                 }
             }
 
@@ -840,8 +775,7 @@
             }
 
             const logoElForHover = document.querySelector('.hero-logo-container');
-            const hudElementsToFade = document.querySelectorAll('.nav-wrapper, .mobile-hud, #countdown-inner, .hero-stats');
-            const heroVideo = document.getElementById('hero-video');
+            const hudElementsToFade = document.querySelectorAll('.nav-wrapper, .mobile-hud, .hero-stats');
 
             if (logoElForHover) {
                 logoElForHover.addEventListener('mouseenter', () => {
@@ -931,32 +865,8 @@
                 if (fpsEl) fpsEl.innerText = `fps: ${Math.floor(58 + Math.random() * 4)}`;
             }, 1000);
 
-            const targetDate = new Date("2026-06-26T00:00:00").getTime();
-            const timerElement = document.getElementById("timer");
-            
-            if (timerElement) {
-                setInterval(() => {
-                    const now = new Date().getTime();
-                    const distance = targetDate - now;
-                    
-                    if (distance < 0) { 
-                        timerElement.innerText = "00:00:00:00"; 
-                        return; 
-                    }
-                    
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    
-                    timerElement.innerText = `${String(days).padStart(2, '0')}:${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-                }, 1000);
-            }
-
             if (window.DeviceOrientationEvent && /Mobi|Android/i.test(navigator.userAgent)) {
                 const logoEl = document.querySelector('.hero-logo-container');
-                const timerBoxEl = document.querySelector('.timer-box');
-                const qMarksEl = document.querySelector('.q-marks-wrapper');
                 
                 let initialBeta = null;
                 let initialGamma = null;
@@ -989,12 +899,6 @@
                         requestAnimationFrame(() => {
                             if (logoEl) {
                                 logoEl.style.transform = `translate3d(${-x}px, ${-y}px, 0)`;
-                            }
-                            if (timerBoxEl) {
-                                timerBoxEl.style.transform = `translate3d(${-x*0.6}px, ${-y*0.6}px, 0)`;
-                            }
-                            if (qMarksEl) {
-                                qMarksEl.style.transform = `translate3d(${-x*0.4}px, ${-y*0.4}px, 0)`;
                             }
                         });
                     }
