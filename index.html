@@ -173,12 +173,20 @@
             background: var(--bg-color);
         }
 
+        .hero-video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 1; opacity: 0.2;
+            transition: opacity 0.6s ease;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+        }
+
         .fade-out-hud { opacity: 0 !important; pointer-events: none !important; }
         .nav-wrapper, .mobile-hud, .hero-stats, #signal-container { transition: opacity 0.5s ease, transform 0.5s ease; }
 
         .hero-center { display: flex; justify-content: center; align-items: center; flex-grow: 1; width: 100%; position: relative; z-index: 3; pointer-events: none; }
         .hero-logo-container { width: 100%; max-width: 550px; padding: 0 20px; transition: transform 0.6s ease; pointer-events: auto; }
-        .hero-logo-container img { width: 100%; height: auto; display: block; }
+        .hero-logo-container img { width: 100%; height: auto; display: block; opacity: 1 !important; }
         .hero-logo-container:hover { transform: scale(1.03); }
 
         .hero-stats {
@@ -434,21 +442,25 @@
 
     <main id="main-content">
         <header class="hero" id="hero-section" data-cursor="cursor-hero">
+            <video autoplay loop muted playsinline class="hero-video-bg" id="hero-video">
+                <source src="video.mp4" type="video/mp4">
+            </video>
+            
             <div class="hero-stats stats-tl">
                 <div id="stat-time">00:00:00</div>
                 <div style="opacity: 0.5;">status: online</div>
             </div>
             <div class="hero-stats stats-tr">
                 <div>loc: poland / 51.9383</div>
-                <div id="stat-ip" style="opacity: 0.5;">ip: 192.168.1.1</div>
+                <div style="opacity: 0.5;">ip: 192.168.1.1</div>
             </div>
             <div class="hero-stats stats-bl">
                 <div>sys_v: 1.0.2</div>
                 <div style="opacity: 0.5;">bpm_sync: enabled</div>
             </div>
             <div class="hero-stats stats-br">
-                <div id="stat-fps">fps: 60</div>
-                <div style="opacity: 0.5;">buffer: active</div>
+                <div id="stat-fps">fps: --</div>
+                <div style="opacity: 0.5;">render: active</div>
             </div>
 
             <div class="hero-center">
@@ -534,6 +546,11 @@
     </div>
 
     <script>
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
         window.addEventListener('wheel', e => {
             if (e.ctrlKey) {
                 e.preventDefault();
@@ -776,14 +793,17 @@
 
             const logoElForHover = document.querySelector('.hero-logo-container');
             const hudElementsToFade = document.querySelectorAll('.nav-wrapper, .mobile-hud, .hero-stats');
+            const videoBg = document.getElementById('hero-video');
 
             if (logoElForHover) {
                 logoElForHover.addEventListener('mouseenter', () => {
                     hudElementsToFade.forEach(el => el.classList.add('fade-out-hud'));
+                    if (videoBg) videoBg.style.opacity = '0.4';
                 });
                 
                 logoElForHover.addEventListener('mouseleave', () => {
                     hudElementsToFade.forEach(el => el.classList.remove('fade-out-hud'));
+                    if (videoBg) videoBg.style.opacity = '0.2';
                 });
             }
 
@@ -860,10 +880,26 @@
                 const now = new Date();
                 const timeEl = document.getElementById('stat-time');
                 if (timeEl) timeEl.innerText = now.toLocaleTimeString('pl-PL', {hour12: false});
-                
-                const fpsEl = document.getElementById('stat-fps');
-                if (fpsEl) fpsEl.innerText = `fps: ${Math.floor(58 + Math.random() * 4)}`;
             }, 1000);
+
+            // FPS Counter Logic
+            const fpsEl = document.getElementById('stat-fps');
+            if (fpsEl) {
+                let frameCount = 0;
+                let lastTime = performance.now();
+                
+                function updateFPS() {
+                    const now = performance.now();
+                    frameCount++;
+                    if (now - lastTime >= 1000) {
+                        fpsEl.innerText = `fps: ${frameCount}`;
+                        frameCount = 0;
+                        lastTime = now;
+                    }
+                    requestAnimationFrame(updateFPS);
+                }
+                requestAnimationFrame(updateFPS);
+            }
 
             if (window.DeviceOrientationEvent && /Mobi|Android/i.test(navigator.userAgent)) {
                 const logoEl = document.querySelector('.hero-logo-container');
